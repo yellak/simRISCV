@@ -5,6 +5,8 @@
 
 int test_lw();
 
+int test_getField();
+
 void run_tests();
 
 #endif

@@ -42,6 +42,20 @@ int test_lw() {
   return errors;
 }
 
+int test_getField() {
+  int32_t tword = 0x1267CAFE;
+  int errors = 0;
+  int result;
+
+  result = getField(tword, 0, 0xFF);
+  if(result != 0xFE) {
+    errors++;
+  }
+
+  return errors;
+}
+
+
 void run_tests() {
   int errors;
 
@@ -52,5 +66,14 @@ void run_tests() {
   }
   else {
     printf("lw() passou nos testes\n");
+  }
+
+  /* fazendo para a função getField */
+  errors = test_getField();
+  if(errors > 0) {
+    printf("Erros em getField(): %d\n", errors);
+  }
+  else {
+    printf("getField() passou nos testes\n");
   }
 }
