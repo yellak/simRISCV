@@ -7,6 +7,8 @@ int test_lw();
 
 int test_getField();
 
+int test_lbu();
+
 void run_tests();
 
 #endif

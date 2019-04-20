@@ -47,8 +47,63 @@ int test_getField() {
   int errors = 0;
   int result;
 
+  /* Testando para o primeiro byte */
   result = getField(tword, 0, 0xFF);
   if(result != 0xFE) {
+    errors++;
+  }
+
+  /* para o último byte */
+  result = getField(tword, 24, 0xFF);
+  if(result != 0x12) {
+    errors++;
+  }
+
+  /* para o nibble A */
+  result = getField(tword, 8, 0xF);
+  if(result != 0xA) {
+    errors++;
+  }
+
+  /* para o nibble 7 */
+  result = getField(tword, 16, 0xF);
+  if(result != 0x7) {
+    errors++;
+  }
+
+  return errors;
+}
+
+int test_lbu() {
+  int32_t mem[4];
+  mem[0] = 0xABCDEF98; /*  0 */
+  mem[1] = 0x76543210; /*  4 */
+  mem[2] = 0xCEFD247F; /*  8 */
+  mem[3] = 0xCAFE2312; /* 12 */
+
+  int errors = 0, result;
+
+  /* byte 0x23 */
+  result = lbu(mem, 13);
+  if(result != 0x23) {
+    errors++;
+  }
+
+  /* byte 0xCA */
+  result = lbu(mem, 15);
+  if(result != 0xCA) {
+    errors++;
+  }
+
+  /* byte 0x54 */
+  result = lbu(mem, 6);
+  if(result != 0x54) {
+    errors++;
+  }
+
+  /* byte 0xEF */
+  result = lbu(mem, 1);
+  if(result != 0xEF) {
     errors++;
   }
 
@@ -62,18 +117,26 @@ void run_tests() {
   /* fazendo os testes para a função lw() */
   errors = test_lw();
   if(errors > 0) {
-    printf("Erros em lw(): %d\n", errors);
+    printf("lw():        ->  %d erros\n", errors);
   }
   else {
-    printf("lw() passou nos testes\n");
+    printf("lw()         -> passou nos testes\n");
   }
 
   /* fazendo para a função getField */
   errors = test_getField();
   if(errors > 0) {
-    printf("Erros em getField(): %d\n", errors);
+    printf("getField():  -> %d erros\n", errors);
   }
   else {
-    printf("getField() passou nos testes\n");
+    printf("getField()   -> passou nos testes\n");
+  }
+
+  errors = test_lbu();
+  if(errors > 0) {
+    printf("lbu()        -> %d erros\n", errors);
+  }
+  else {
+    printf("lbu()        -> passou nos testes\n");
   }
 }
