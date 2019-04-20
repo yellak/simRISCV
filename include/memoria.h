@@ -27,7 +27,13 @@ int32_t lb(int32_t* address, int32_t kte);
 
 /* Argumentos:
    address -> endereço da memória
-   kte     -> offset do prieiro byte da meia-palavra */
+   kte     -> offset do primeiro byte da meia-palavra */
 int32_t lhu(int32_t* address, int32_t kte);
+
+/* Argumentos:
+   address -> endereço da memória
+   kte     -> offset do primeiro byte da meia-palavra */
+int32_t lh(int32_t* address, int32_t kte);
+
 
 #endif

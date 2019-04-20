@@ -9,6 +9,10 @@ int test_getField();
 
 int test_lbu();
 
+int test_lb();
+
+int test_lh();
+
 void run_tests();
 
 #endif

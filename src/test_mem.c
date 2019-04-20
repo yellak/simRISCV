@@ -148,6 +148,86 @@ int test_lhu() {
   return errors;
 }
 
+int test_lb() {
+  int32_t mem[4];
+  mem[0] = 0xABCDEF98; /*  0 */
+  mem[1] = 0x76543210; /*  4 */
+  mem[2] = 0xCEFD247F; /*  8 */
+  mem[3] = 0xCAFE2312; /* 12 */
+
+  int errors = 0;
+  int32_t result;
+
+  /* byte 0xEF */
+  result = lb(mem, 1);
+  if(result != 0xFFFFFFEF) {
+    errors++;
+  }
+
+  /* byte 0x54 */
+  result = lb(mem, 6);
+  if(result != 0x54) {
+    errors++;
+  }
+
+  /* byte 0xFD */
+  result = lb(mem, 10);
+  if(result != 0xFFFFFFFD) {
+    errors++;
+  }
+
+  /* byte 0xCA */
+  result = lb(mem, 15);
+  if(result != 0xFFFFFFCA) {
+    errors++;
+  }
+
+  return errors;
+}
+
+int test_lh() {
+  int32_t mem[4];
+  mem[0] = 0xABCDEF98; /*  0 */
+  mem[1] = 0x76543210; /*  4 */
+  mem[2] = 0xCEFD247F; /*  8 */
+  mem[3] = 0xCAFE2312; /* 12 */
+
+  int errors = 0;
+  int32_t result;
+
+  /* meia-palavra 0xCEFD */
+  result = lh(mem, 11);
+  if(result != 0xFFFFCEFD) {
+    errors++;
+  }
+
+  /* meia-palavra 0xEF98 */
+  result = lh(mem, 1);
+  if(result != 0xFFFFEF98) {
+    errors++;
+  }
+
+  /* meia-palavra 0x2312 */
+  result = lh(mem, 13);
+  if(result != 0x2312) {
+    errors++;
+  }
+
+  /* meia-palavra 0x7654 */
+  result = lh(mem, 6);
+  if(result != 0x7654) {
+    errors++;
+  }
+
+  /* meia-palavra 0xABCD */
+  result = lh(mem, 2);
+  if(result != 0xABCD) {
+    errors++;
+  }
+
+  return errors;
+}
+
 
 void run_tests() {
   int errors;
@@ -184,5 +264,23 @@ void run_tests() {
   }
   else {
     printf("lhu()        -> passou nos testes\n");
+  }
+
+  /* testes da função lb() */
+  errors = test_lb();
+  if(errors > 0) {
+    printf("lb()         -> %d erros\n", errors);
+  }
+  else {
+    printf("lb()         -> passou nos testes\n");
+  }
+
+  /* testes da função lh() */
+  errors = test_lb();
+  if(errors > 0) {
+    printf("lh()         -> %d erros\n", errors);
+  }
+  else {
+    printf("lh()         -> passou nos testes\n");
   }
 }
