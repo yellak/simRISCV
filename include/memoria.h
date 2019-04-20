@@ -35,5 +35,17 @@ int32_t lhu(int32_t* address, int32_t kte);
    kte     -> offset do primeiro byte da meia-palavra */
 int32_t lh(int32_t* address, int32_t kte);
 
+/* Argumentos:
+   address -> endereço da memória
+   kte     -> offset de byte onde colocar a palavra
+   dado    -> valor a ser armazenado na memória */
+void sw(int32_t* address, int32_t kte, int32_t dado);
+
+/* Argumentos:
+   address -> endereço da memória
+   kte     -> offset de byte onde colocar o byte
+   dado    -> valor a ser armazenado na memória */
+void sb(int32_t* address, int32_t kte, int32_t dado);
+
 
 #endif

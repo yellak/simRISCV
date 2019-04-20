@@ -13,6 +13,10 @@ int test_lb();
 
 int test_lh();
 
+int test_sw();
+
+int test_sb();
+
 void run_tests();
 
 #endif

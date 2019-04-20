@@ -228,6 +228,78 @@ int test_lh() {
   return errors;
 }
 
+int test_sw() {
+  int32_t mem[4];
+  int errors = 0;
+
+  mem[0] = 0x00000000;
+  mem[1] = 0x00000000;
+  mem[2] = 0x00000000;
+  mem[3] = 0x00000000;
+
+  sw(mem, 3, 0xABCDEF98);
+  if(mem[0] != 0xABCDEF98) {
+    errors++;
+  }
+
+  sw(mem, 12, 0xCCAAFFEE);
+  if(mem[3] != 0xCCAAFFEE) {
+    errors++;
+  }
+
+  sw(mem, 8, 0xFACA);
+  if(mem[2] != 0xFACA) {
+    errors++;
+  }
+
+  sw(mem, 4, 0xECA);
+  if(mem[1] != 0xECA) {
+    errors++;
+  }
+
+  return errors;
+}
+
+int test_sb() {
+  int32_t mem[4];
+  int errors = 0;
+  mem[0] = 0xABCDEF98; /*  0 */
+  mem[1] = 0x76543210; /*  4 */
+  mem[2] = 0xCEFD247F; /*  8 */
+  mem[3] = 0xCAFE2312; /* 12 */
+
+  /* guardando no byte 0xCD */
+  sb(mem, 2, 0x23);
+  if(mem[0] != 0xAB23EF98) {
+    errors++;
+  }
+
+  /* guardando no byte 0xCA */
+  sb(mem, 15, 0xFE);
+  if(mem[3] != 0xFEFE2312) {
+    errors++;
+  }
+
+  /* guardando no byte 0x7F */
+  sb(mem, 8, 0x07);
+  if(mem[2] != 0xCEFD2407) {
+    errors++;
+  }
+
+  /* guardando no byte 0x76 */
+  sb(mem, 7, 0xFE);
+  if(mem[1] != 0xFE543210) {
+    errors++;
+  }
+
+  /* guardando no byte 0xFD */
+  sb(mem, 10, 0xAA);
+  if(mem[2] != 0xCEAA2407) {
+    errors++;
+  }
+
+  return errors;
+}
 
 void run_tests() {
   int errors;
@@ -282,5 +354,23 @@ void run_tests() {
   }
   else {
     printf("lh()         -> passou nos testes\n");
+  }
+
+  /* testes para a função sw() */
+  errors = test_sw();
+  if(errors > 0) {
+    printf("sw()         -> %d erros\n", errors);
+  }
+  else {
+    printf("sw()         -> passou nos testes\n");
+  }
+
+  /* testes para a função sb() */
+  errors = test_sb();
+  if(errors > 0) {
+    printf("sb()         -> %d erros\n", errors);
+  }
+  else {
+    printf("sb()         -> passou nos testes\n");
   }
 }

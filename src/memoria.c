@@ -36,3 +36,17 @@ int32_t lh(int32_t* address, int32_t kte) {
   int8_t temp2 = (int8_t)temp;
   return (int32_t)temp2;
 }
+
+void sw(int32_t* address, int32_t kte, int32_t dado) {
+  address[kte >> 2] = dado;
+}
+
+void sb(int32_t* address, int32_t kte, int32_t dado) {
+  int32_t mask = 0x000000FF;
+  int pos = kte / 4;
+  int shift = 8*(kte % 4);
+  mask = ~(mask << shift);
+  address[pos] &= mask;
+  dado = dado << shift;
+  address[pos] |= dado;
+}
