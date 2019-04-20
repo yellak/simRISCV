@@ -45,7 +45,13 @@ void sw(int32_t* address, int32_t kte, int32_t dado);
    address -> endereço da memória
    kte     -> offset de byte onde colocar o byte
    dado    -> valor a ser armazenado na memória */
-void sb(int32_t* address, int32_t kte, int32_t dado);
+void sb(int32_t* address, int32_t kte, int8_t dado);
+
+/* Argumentos:
+   address -> endereço da memória
+   kte     -> offset de byte onde colocar a meia palavra
+   dado    -> valor a ser armazenado na memória */
+void sh(int32_t* address, int32_t kte, int16_t dado);
 
 
 #endif

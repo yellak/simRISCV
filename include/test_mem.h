@@ -17,6 +17,8 @@ int test_sw();
 
 int test_sb();
 
+int test_sh();
+
 void run_tests();
 
 #endif

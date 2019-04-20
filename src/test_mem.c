@@ -221,7 +221,7 @@ int test_lh() {
 
   /* meia-palavra 0xABCD */
   result = lh(mem, 2);
-  if(result != 0xABCD) {
+  if(result != 0xFFFFABCD) {
     errors++;
   }
 
@@ -301,6 +301,47 @@ int test_sb() {
   return errors;
 }
 
+int test_sh() {
+  int32_t mem[4];
+  int errors = 0;
+  mem[0] = 0xABCDEF98; /*  0 */
+  mem[1] = 0x76543210; /*  4 */
+  mem[2] = 0xCEFD247F; /*  8 */
+  mem[3] = 0xCAFE2312; /* 12 */
+
+  /* guardando no lugar de 0xABCD */
+  sh(mem, 3, 0xCCCC);
+  if(mem[0] != 0xCCCCEF98) {
+    errors++;
+  }
+
+  /* guardando no lugar de 0x3210 */
+  sh(mem, 4, 0xCACA);
+  if(mem[1] != 0x7654CACA) {
+    errors++;
+  }
+
+  /* guardando no lugar de 0xCAFE */
+  sh(mem, 14, 0x2222);
+  if(mem[3] != 0x22222312) {
+    errors++;
+  }
+
+  /* guardando no lugar de 0xCEFD */
+  sh(mem, 11, 0xABAB);
+  if(mem[2] != 0xABAB247F) {
+    errors++;
+  }
+
+  /* guardando no lugar de 0x247F */
+  sh(mem, 8, 0xDDDD);
+  if(mem[2] != 0xABABDDDD) {
+    errors++;
+  }
+
+  return errors;
+}
+
 void run_tests() {
   int errors;
 
@@ -348,7 +389,7 @@ void run_tests() {
   }
 
   /* testes da função lh() */
-  errors = test_lb();
+  errors = test_lh();
   if(errors > 0) {
     printf("lh()         -> %d erros\n", errors);
   }
@@ -372,5 +413,14 @@ void run_tests() {
   }
   else {
     printf("sb()         -> passou nos testes\n");
+  }
+
+  /* testes para a função sh() */
+  errors = test_sh();
+  if(errors > 0) {
+    printf("sh()         -> %d erros\n", errors);
+  }
+  else {
+    printf("sh()         -> passou nos testes\n");
   }
 }
