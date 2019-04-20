@@ -81,7 +81,8 @@ int test_lbu() {
   mem[2] = 0xCEFD247F; /*  8 */
   mem[3] = 0xCAFE2312; /* 12 */
 
-  int errors = 0, result;
+  int errors = 0;
+  uint32_t result;
 
   /* byte 0x23 */
   result = lbu(mem, 13);
@@ -104,6 +105,43 @@ int test_lbu() {
   /* byte 0xEF */
   result = lbu(mem, 1);
   if(result != 0xEF) {
+    errors++;
+  }
+
+  return errors;
+}
+
+int test_lhu() {
+  int32_t mem[4];
+  mem[0] = 0xABCDEF98; /*  0 */
+  mem[1] = 0x76543210; /*  4 */
+  mem[2] = 0xCEFD247F; /*  8 */
+  mem[3] = 0xCAFE2312; /* 12 */
+
+  int errors = 0;
+  uint32_t result;
+
+  /* meia-palavra 0x247F */
+  result = lhu(mem, 9);
+  if(result != 0x247F) {
+    errors++;
+  }
+
+  /* meia-palavra 0x7654 */
+  result = lhu(mem, 6);
+  if(result != 0x7654) {
+    errors++;
+  }
+
+  /* meia-palavra 0xCAFE */
+  result = lhu(mem, 15);
+  if(result != 0xCAFE) {
+    errors++;
+  }
+
+  /* meia-palavra 0xEF98 */
+  result = lhu(mem, 0);
+  if(result != 0xEF98) {
     errors++;
   }
 
@@ -138,5 +176,13 @@ void run_tests() {
   }
   else {
     printf("lbu()        -> passou nos testes\n");
+  }
+
+  errors = test_lhu();
+  if(errors > 0) {
+    printf("lhu()        -> %d erros\n", errors);
+  }
+  else {
+    printf("lhu()        -> passou nos testes\n");
   }
 }
