@@ -2,4 +2,5 @@
 
 int main() {
   run_tests();
+  run_esp_tests();
 }

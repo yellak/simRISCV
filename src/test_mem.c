@@ -362,7 +362,8 @@ void run_tests() {
   else {
     printf("getField()   -> passou nos testes\n");
   }
-
+  
+  /* testes para a função lbu() */
   errors = test_lbu();
   if(errors > 0) {
     printf("lbu()        -> %d erros\n", errors);
@@ -371,6 +372,7 @@ void run_tests() {
     printf("lbu()        -> passou nos testes\n");
   }
 
+  /* testes para a função lhu() */
   errors = test_lhu();
   if(errors > 0) {
     printf("lhu()        -> %d erros\n", errors);
@@ -423,4 +425,14 @@ void run_tests() {
   else {
     printf("sh()         -> passou nos testes\n");
   }
+}
+
+void run_esp_tests() {
+  int32_t mem[4];
+  mem[0] = 0xABCDEF98; /*  0 */
+  mem[1] = 0x76543210; /*  4 */
+  mem[2] = 0xCEFD247F; /*  8 */
+  mem[3] = 0xCAFE2312; /* 12 */
+
+  dump_mem(mem, 4);
 }

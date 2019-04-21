@@ -64,3 +64,10 @@ void sh(int32_t* address, int32_t kte, int16_t dado) {
   dado2 = dado2 << shift;
   address[pos] |= dado2;
 }
+
+void dump_mem(int32_t* address, uint32_t wsize) {
+  int i;
+  for(i = 0; i < wsize; i++) {
+    printf("mem[%d] = %X\n", i, address[i]);
+  }
+}
