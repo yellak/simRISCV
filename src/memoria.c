@@ -68,6 +68,6 @@ void sh(int32_t* address, int32_t kte, int16_t dado) {
 void dump_mem(int32_t* address, uint32_t wsize) {
   int i;
   for(i = 0; i < wsize; i++) {
-    printf("mem[%d] = %X\n", i, address[i]);
+    printf("mem[%d] = %8X\n", i, address[i]);
   }
 }
