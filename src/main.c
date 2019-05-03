@@ -10,13 +10,6 @@
    programa irá compilar e então execute digitando ./main */
 
 int main() {
-  printf("Executando testes iniciais:\n");
-  run_tests();
-
-  //  printf("\n---------------------------------\n");
-  //  printf("Executando testes especificados\n");
-  //  run_esp_tests();
-
   int32_t mem[100];
   read_mem(mem, "tests/test1_text.bin");
   dump_mem(mem, 5);

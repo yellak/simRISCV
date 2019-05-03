@@ -21,6 +21,4 @@ int test_sh();
 
 void run_tests();
 
-void run_esp_tests();
-
 #endif
