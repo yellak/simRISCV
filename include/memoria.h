@@ -16,6 +16,13 @@ int32_t lw(int32_t* address, int32_t kte);
 int32_t getField(int32_t word, int bit, int mask);
 
 /* Argumentos:
+   word    -> palavra a ser setada
+   ind     -> posição inicial da parte a ser setada
+   mask    -> binário indicando a quantidade de bits de value
+   value   -> value que será setado */
+int32_t setField(int32_t word, int ind, int mask, int value);
+
+/* Argumentos:
    address -> endereço da memória
    kte     -> offset do byte */
 int32_t lbu(int32_t* address, int32_t kte);

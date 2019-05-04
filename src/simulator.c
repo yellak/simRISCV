@@ -48,6 +48,22 @@ void decode() {
   /* extraindo rs1 */
   rs1 = getField(ri, 15, 0x1F);
 
-  /* extraindo rs2 */
+  /* extraindo rs2 e shamt*/
   rs2 = getField(ri, 20, 0x1F);
+  shamt = rs2;
+
+  /* extraindo rd */
+  rd = getField(ri, 7, 0x1F);
+
+  /* extraindo funct3 */
+  funct3 = getField(ri, 12, 0x7);
+
+  /* extraindo funct7 */
+  funct7 = getField(ri, 25, 0x7F);
+
+  /* extraindo imm12_i */
+  imm12_i = getField(ri, 20, 0xFFF);
+  if(imm12_i & 0x800) {
+    imm12_i += 0xFFFFF000;
+  }
 }

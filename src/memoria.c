@@ -71,3 +71,8 @@ void dump_mem(int32_t* address, uint32_t wsize) {
     printf("mem[%d] = 0x%08X\n", i, address[i]);
   }
 }
+
+int32_t setField(int32_t word, int ind, int mask, int value) {
+  int temp = (word & ~(mask << ind)) | (value << ind);
+  return temp;
+}

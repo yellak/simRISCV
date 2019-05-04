@@ -7,6 +7,8 @@ int test_lw();
 
 int test_getField();
 
+int test_setField();
+
 int test_lbu();
 
 int test_lb();

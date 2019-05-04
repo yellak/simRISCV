@@ -75,6 +75,18 @@ int test_decode() {
   if(rs2 != 6) {
     errors++;
   }
+  if(rd != 10) {
+    errors++;
+  }
+  if(funct3 != 0) {
+    errors++;
+  }
+  if(funct7 != 0) {
+    errors++;
+  }
+  if(imm12_i != 6) {
+    errors++;
+  }
 
   /* segunda */
   fetch();
@@ -86,6 +98,18 @@ int test_decode() {
     errors++;
   }
   if(rs2 != 1) {
+    errors++;
+  }
+  if(rd != 0x11) {
+    errors++;
+  }
+  if(funct3 != 0) {
+    errors++;
+  }
+  if(funct7 != 0) {
+    errors++;
+  }
+  if(imm12_i != 1) {
     errors++;
   }
 
@@ -101,6 +125,18 @@ int test_decode() {
   if(rs2 != 0) {
     errors++;
   }
+  if(rd != 0) {
+    errors++;
+  }
+  if(funct3 != 0) {
+    errors++;
+  }
+  if(funct7 != 0) {
+    errors++;
+  }
+  if(imm12_i != 0) {
+    errors++;
+  }
 
   /* quarta */
   fetch();
@@ -114,6 +150,18 @@ int test_decode() {
   if(rs2 != 10) {
     errors++;
   }
+  if(rd != 0x11) {
+    errors++;
+  }
+  if(funct3 != 0) {
+    errors++;
+  }
+  if(funct7 != 0) {
+    errors++;
+  }
+  if(imm12_i != 0xA) {
+    errors++;
+  }
 
   /* quinta */
   fetch();
@@ -125,6 +173,18 @@ int test_decode() {
     errors++;
   }
   if(rs2 != 0) {
+    errors++;
+  }
+  if(rd != 0) {
+    errors++;
+  }
+  if(funct3 != 0) {
+    errors++;
+  }
+  if(funct7 != 0) {
+    errors++;
+  }
+  if(imm12_i != 0) {
     errors++;
   }
 

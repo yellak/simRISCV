@@ -342,6 +342,35 @@ int test_sh() {
   return errors;
 }
 
+int test_setField() {
+  int errors = 0;
+  int32_t word, value;
+  word = setField(0x895734, 8, 0xFF, 0x11);
+  if(word != 0x891134) {
+    errors++;
+  }
+
+  value = 0xAA;
+  word = setField(0xFFFFFF, 16, 0xFF, value);
+  if(word != 0xAAFFFF) {
+    errors++;
+  }
+
+  value = 0xD;
+  word = setField(0xABCDEF, 4, 0xF, value);
+  if(word != 0xABCDDF) {
+    errors++;
+  }
+
+  value = 0xAA;
+  word = setField(0xDDD, 4, 0xFF, value);
+  if(word != 0xAAD) {
+    errors++;
+  }
+
+  return errors;
+}
+
 void run_tests() {
   int errors;
 
@@ -361,6 +390,15 @@ void run_tests() {
   }
   else {
     printf("getField()   -> passou nos testes\n");
+  }
+
+  /* testes para setField */
+  errors = test_setField();
+  if(errors > 0) {
+    printf("setField():  -> %d erros\n", errors);
+  }
+  else {
+    printf("setField()   -> passou nos testes\n");
   }
   
   /* testes para a função lbu() */
