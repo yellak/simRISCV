@@ -157,5 +157,13 @@ void execute() {
       break;
     }
     break;
-  }
+
+  case ILAType:
+    switch(funct3) {
+    case ADDI3:
+      breg[rd] = breg[rs1] + imm12_i;
+      break;
+    }
+    break;
+  } /* switch(opcode) */
 }
