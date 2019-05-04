@@ -1,5 +1,23 @@
 #include "../include/simulator.h"
 
+void init_simulator() {
+  int i;
+
+  for(i = 0; i < 4096; i++) {
+    memory[i] = 0;
+  }
+
+  pc = 0x00000000;
+  ri = 0x00000000;
+
+  for(i = 0; i < 32; i++) {
+    breg[i] = 0;
+  }
+  
+  breg[sp] = 0x00003FFC;
+  breg[gp] = 0x00001800;
+}
+
 void read_mem(int32_t* mem, char filename[]) {
   FILE *fp = fopen(filename, "rb");
   if(fp == NULL) {
@@ -16,4 +34,20 @@ void read_mem(int32_t* mem, char filename[]) {
   }
 
   fclose(fp);
+}
+
+void fetch() {
+  ri = memory[pc >> 2];
+  pc += 4;
+}
+
+void decode() {
+  /* extraindo o opcode */
+  opcode = getField(ri, 0, 0x7F);
+
+  /* extraindo rs1 */
+  rs1 = getField(ri, 15, 0x1F);
+
+  /* extraindo rs2 */
+  rs2 = getField(ri, 20, 0x1F);
 }

@@ -9,10 +9,10 @@ MAINOBJ = $(patsubst %, $(ODIR)/%, $(_MAINOBJ))
 _MAINDEPS = memoria.h test_mem.h simulator.h
 MAINDEPS = $(patsubst %, $(IDIR)/%, $(_MAINDEPS))
 
-_TESTSOBJ = test_mem.o test_simulator.o memoria.o run_tests.o simulator.o
+_TESTSOBJ = test_mem.o test_simulator.o run_tests.o memoria.o simulator.o
 TESTSOBJ = $(patsubst %, $(ODIR)/%, $(_TESTSOBJ))
 
-_TESTSDEPS = memoria.h test_mem.h test_simulator.h run_tests.h simulator.h
+_TESTSDEPS = test_mem.h test_simulator.h run_tests.h memoria.h simulator.h
 TESTSDEPS = $(patsubst %, $(IDIR)/%, $(_TESTSDEPS))
 
 # Compilando módulos
@@ -30,4 +30,4 @@ run_tests: $(TESTSOBJ) $(TESTSDEPS)
 .PHONY: clean
 
 clean:
-	rm -f  $(ODIR)/*.o *~ $(IDIR)/*~ main
+	rm -f  $(ODIR)/*.o *~ $(IDIR)/*~ main run_tests
