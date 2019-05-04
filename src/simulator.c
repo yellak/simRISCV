@@ -42,6 +42,8 @@ void fetch() {
 }
 
 void decode() {
+  int32_t temp; /* valor temporário para imediatos */
+
   /* extraindo o opcode */
   opcode = getField(ri, 0, 0x7F);
 
@@ -65,5 +67,13 @@ void decode() {
   imm12_i = getField(ri, 20, 0xFFF);
   if(imm12_i & 0x800) {
     imm12_i += 0xFFFFF000;
+  }
+
+  /* extraindo imm12_s */
+  imm12_s = getField(ri, 7, 0x1F); /* bits 7-11 de ri */
+  temp = getField(ri, 25, 0x7F);   /* bits 25-31 de ri */
+  imm12_s = setField(imm12_s, 5, 0x7F, temp);
+  if(imm12_s & 0x800) {
+    imm12_s += 0xFFFFF000;
   }
 }
