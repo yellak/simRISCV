@@ -93,6 +93,12 @@ int test_decode() {
   if(imm13 != 10) {
     errors++;
   }
+  if(imm21 != 6) {
+    errors++;
+  }
+  if(imm20_u != 0x600000) {
+    errors++;
+  }
 
   /* segunda */
   fetch();
@@ -122,6 +128,12 @@ int test_decode() {
     errors++;
   }
   if(imm13 != 0x810) {
+    errors++;
+  }
+  if(imm21 != 0x800) {
+    errors++;
+  }
+  if(imm20_u != 0x100000) {
     errors++;
   }
 
@@ -155,6 +167,12 @@ int test_decode() {
   if(imm13 != 0) {
     errors++;
   }
+  if(imm21 != 0) {
+    errors++;
+  }
+  if(imm20_u != 00) {
+    errors++;
+  }
 
   /* quarta */
   fetch();
@@ -186,6 +204,12 @@ int test_decode() {
   if(imm13 != 0x810) {
     errors++;
   }
+  if(imm21 != 10) {
+    errors++;
+  }
+  if(imm20_u != 0xA00000) {
+    errors++;
+  }
 
   /* quinta */
   fetch();
@@ -215,6 +239,12 @@ int test_decode() {
     errors++;
   }
   if(imm13 != 0) {
+    errors++;
+  }
+  if(imm21 != 0) {
+    errors++;
+  }
+  if(imm20_u != 0) {
     errors++;
   }
 

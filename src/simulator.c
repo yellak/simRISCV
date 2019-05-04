@@ -91,4 +91,23 @@ void decode() {
   if(imm13 & 0x1000) {
     imm13 += 0xFFFFE000;
   }
+
+  /* extraindo imm21 */
+  imm21 = 0;
+  temp = getField(ri, 21, 0x3FF); /* bits 1-10 do imediato */
+  imm21 = setField(imm21, 1, 0x3FF, temp);
+  temp = getField(ri, 20, 1); /* bit 11 do imediato */
+  imm21 = setField(imm21, 11, 1, temp);
+  temp = getField(ri, 12, 0xFF); /* bits 12-19 do imediato */
+  imm21 = setField(imm21, 12, 0xFF, temp);
+  temp = getField(ri, 31, 1); /* bit 20 do imediato */
+  imm21 = setField(imm21, 20, 1, temp);
+  if(imm21 & 0x100000) {
+    imm21 += 0xFFE00000;
+  }
+
+  /* extraindo imm20_u */
+  imm20_u = 0;
+  temp = getField(ri, 12, 0xFFFFF);
+  imm20_u = setField(imm20_u, 12, 0xFFFFF, temp);
 }
