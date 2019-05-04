@@ -36,6 +36,14 @@ void read_mem(int32_t* mem, char filename[]) {
   fclose(fp);
 }
 
+void load_data() {
+  int i;
+
+  for(i = 0; i <= (DATA_END - DATA_INIT + 1); i++) {
+    memory[(i + DATA_INIT) >> 2] = data_mem[i >> 2];
+  }
+}
+
 void fetch() {
   ri = memory[pc >> 2];
   pc += 4;
@@ -110,4 +118,36 @@ void decode() {
   imm20_u = 0;
   temp = getField(ri, 12, 0xFFFFF);
   imm20_u = setField(imm20_u, 12, 0xFFFFF, temp);
+}
+
+void execute() {
+  int32_t pca = pc - 4;
+  switch(opcode) {
+  case LUI: /* 20 bits mais significativos */
+    breg[rd] = imm20_u;
+    break;
+
+  case JAL: /* jump e salva o pc */
+    breg[rd] = pc;
+    pc = pca + imm21;
+    break;
+
+  case BType: /* branches */
+    switch(funct3) {
+    case BEQ3:
+      if(breg[rs1] == breg[rs2]) {
+	pc = pca + imm13;
+      } /* if */
+      break;
+    } /* switch(funct3) */
+    break;
+
+  case ILType: /* load */
+    switch(funct3) {
+    case LB3: /* carregar byte com sinal */
+      breg[rd] = lb(memory, breg[rs1] + imm12_i);
+      break;
+    }
+    break;
+  }
 }

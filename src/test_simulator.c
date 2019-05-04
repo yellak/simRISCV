@@ -1,6 +1,12 @@
 #include "../include/test_simulator.h"
 
+/* declarações de de testes */
 char test1[] = "tests/test1_text.bin";
+char test_lui[] = "tests/tst_lui_text.bin";
+char test_jal[] = "tests/tst_jal_text.bin";
+char test_beq[] = "tests/tst_beq_text.bin";
+char test_lb_txt[] = "tests/tst_lb_text.bin";
+char test_lb_dt[] = "tests/tst_lb_data.bin";
 
 int test_read_mem() {
   int errors = 0;
@@ -251,6 +257,77 @@ int test_decode() {
   return errors;
 }
 
+int test_exe_lui() {
+  init_simulator();
+  read_mem(memory, test_lui);
+  int errors = 0;
+
+  fetch();
+  decode();
+  execute();
+  if(breg[t0] != 0xABCD000) {
+    errors++;
+  }
+
+  return errors;
+}
+
+int test_exe_jal() {
+  init_simulator();
+  read_mem(memory, test_jal);
+  int errors = 0;
+
+  fetch();
+  fetch();
+  fetch();
+  decode();
+  execute();
+  if(pc != 4) {
+    errors++;
+  }
+  if(breg[t1] != 0xC) {
+    errors++;
+  }
+
+  return errors;
+}
+
+int test_exe_beq() {
+  init_simulator();
+  read_mem(memory, test_beq);
+  int errors = 0;
+
+  fetch();
+  fetch();
+  decode();
+  execute();
+  if(pc != 0) {
+    errors++;
+  }
+
+  return errors;
+}
+
+int test_exe_lb() {
+  init_simulator();
+  read_mem(data_mem, test_lb_dt);
+  read_mem(memory, test_lb_txt);
+  load_data();
+  int errors = 0;
+
+  fetch();
+  fetch();
+  fetch();
+  decode();
+  breg[t0] = 0x2000;
+  execute();
+  if(breg[t1] != 0xFFFFFFA0) {
+    errors++;
+  }
+
+  return errors;
+}
+
 void run_simulator_tests() {
   int errors;
   errors = test_read_mem();
@@ -275,5 +352,37 @@ void run_simulator_tests() {
   }
   else {
     printf("decode()     -> passou nos testes\n");
+  }
+
+  errors = test_exe_lui();
+  if(errors > 0) {
+    printf("exe_lui()    -> %d erros\n", errors);
+  }
+  else {
+    printf("exe_lui()    -> passou nos testes\n");
+  }
+
+  errors = test_exe_jal();
+  if(errors > 0) {
+    printf("exe_jal()    -> %d erros\n", errors);
+  }
+  else {
+    printf("exe_jal()    -> passou nos testes\n");
+  }
+
+  errors = test_exe_beq();
+  if(errors > 0) {
+    printf("exe_beq()    -> %d erros\n", errors);
+  }
+  else {
+    printf("exe_beq()    -> passou nos testes\n");
+  }
+
+  errors = test_exe_lb();
+  if(errors > 0) {
+    printf("exe_lb()     -> %d erros\n", errors);
+  }
+  else {
+    printf("exe_lb()     -> passou nos testes\n");
   }
 }
