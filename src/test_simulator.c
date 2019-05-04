@@ -58,14 +58,6 @@ int test_fetch() {
   return errors;
 }
 
-/* 
-+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-|20|19|18|17|16|15|14|13|12|11|10| 9| 8| 7| 6| 5| 4| 3| 2| 1| 0|
-+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-|  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |  |1 |0 |0 |0 |1 |
-+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+--+
-
-*/
 int test_decode() {
   init_simulator();
   read_mem(memory, test1);
@@ -98,6 +90,9 @@ int test_decode() {
   if(imm12_s != 10) {
     errors++;
   }
+  if(imm13 != 10) {
+    errors++;
+  }
 
   /* segunda */
   fetch();
@@ -124,6 +119,9 @@ int test_decode() {
     errors++;
   }
   if(imm12_s != 0x11) {
+    errors++;
+  }
+  if(imm13 != 0x810) {
     errors++;
   }
 
@@ -154,6 +152,9 @@ int test_decode() {
   if(imm12_s != 0) {
     errors++;
   }
+  if(imm13 != 0) {
+    errors++;
+  }
 
   /* quarta */
   fetch();
@@ -182,6 +183,9 @@ int test_decode() {
   if(imm12_s != 0x11) {
     errors++;
   }
+  if(imm13 != 0x810) {
+    errors++;
+  }
 
   /* quinta */
   fetch();
@@ -208,6 +212,9 @@ int test_decode() {
     errors++;
   }
   if(imm12_s != 0) {
+    errors++;
+  }
+  if(imm13 != 0) {
     errors++;
   }
 

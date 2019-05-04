@@ -41,6 +41,7 @@ void fetch() {
   pc += 4;
 }
 
+
 void decode() {
   int32_t temp; /* valor temporário para imediatos */
 
@@ -75,5 +76,19 @@ void decode() {
   imm12_s = setField(imm12_s, 5, 0x7F, temp);
   if(imm12_s & 0x800) {
     imm12_s += 0xFFFFF000;
+  }
+
+  /* extraindo imm13 */
+  imm13 = 0;
+  temp = getField(ri, 8, 0xF); /* bits 1-4 do imediato */
+  imm13 = setField(imm13, 1, 0xF, temp);
+  temp = getField(ri, 25, 0x3F); /* bits 5-10 do imediato */
+  imm13 = setField(imm13, 5, 0x3F, temp);
+  temp = getField(ri, 7, 1); /* bit 11 do imediato */
+  imm13 = setField(imm13, 11, 1, temp);
+  temp = getField(ri, 31, 1); /* bit 12 do imediato */
+  imm13 = setField(imm13, 12, 1, temp);
+  if(imm13 & 0x1000) {
+    imm13 += 0xFFFFE000;
   }
 }
