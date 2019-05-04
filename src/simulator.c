@@ -149,5 +149,13 @@ void execute() {
       break;
     }
     break;
+
+  case StoreType:
+    switch(funct3) {
+    case SB3:
+      sb(memory, breg[rs1] + imm12_s, breg[rs2]);
+      break;
+    }
+    break;
   }
 }

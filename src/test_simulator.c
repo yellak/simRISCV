@@ -7,6 +7,7 @@ char test_jal[] = "tests/tst_jal_text.bin";
 char test_beq[] = "tests/tst_beq_text.bin";
 char test_lb_txt[] = "tests/tst_lb_text.bin";
 char test_lb_dt[] = "tests/tst_lb_data.bin";
+char test_sb_txt[] = "tests/tst_sb_text.bin";
 
 int test_read_mem() {
   int errors = 0;
@@ -328,6 +329,27 @@ int test_exe_lb() {
   return errors;
 }
 
+int test_exe_sb() {
+  init_simulator();
+  read_mem(memory, test_sb_txt);
+  int errors = 0;
+
+  fetch();
+  fetch();
+  fetch();
+  fetch();
+  decode();
+  breg[t0] = 0x2001;
+  breg[t1] = 0xEF;
+  execute();
+  if(memory[0x2000 >> 2] != 0xEF) {
+    errors++;
+  }
+
+  return errors;
+}
+
+
 void run_simulator_tests() {
   int errors;
   errors = test_read_mem();
@@ -384,5 +406,13 @@ void run_simulator_tests() {
   }
   else {
     printf("exe_lb()     -> passou nos testes\n");
+  }
+
+  errors = test_exe_sb();
+  if(errors > 0) {
+    printf("exe_sb()     -> %d erros\n", errors);
+  }
+  else {
+    printf("exe_sb()     -> passou nos testes\n");
   }
 }
