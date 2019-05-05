@@ -14,6 +14,7 @@ char test_auipc_txt[] = "tests/tst_auipc_text.bin";
 char test_jalr_txt[] = "tests/tst_jalr_text.bin";
 char test_slti_txt[] = "tests/tst_slti_text.bin";
 char test_sltiu_txt[] = "tests/tst_sltiu_text.bin";
+char test_slli_txt[] = "tests/tst_slli_text.bin";
 
 int test_read_mem() {
   int errors = 0;
@@ -468,7 +469,24 @@ int test_exe_sltiu() {
   }
 
   return errors;
-} 
+}
+
+int test_exe_slli() {
+  init_simulator();
+  read_mem(memory, test_slli_txt);
+  int errors = 0;
+
+  fetch();
+  fetch();
+  decode();
+  breg[t0] = 0xF;
+  execute();
+  if(breg[t1] != 0xF0) {
+    errors++;
+  }
+
+  return errors;
+}
 
 void run_simulator_tests() {
   int errors;
@@ -582,5 +600,13 @@ void run_simulator_tests() {
   }
   else {
     printf("exe_sltiu()  -> passou nos testes\n");
+  }
+
+  errors = test_exe_slli();
+  if(errors > 0) {
+    printf("exe_slli()   -> %d erros\n", errors);
+  }
+  else {
+    printf("exe_slli()   -> passou nos testes\n");
   }
 }

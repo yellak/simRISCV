@@ -223,8 +223,26 @@ void execute() {
       breg[rd] = breg[rs1] < imm12_i;
       break;
 
-    case SLTIU3:
+    case SLTIU3: /* set if less than unsined */
       breg[rd] = ( (uint32_t) breg[rs1]) < ( (uint32_t) imm12_i);
+      break;
+
+    case XORI3: /* xor bit a bit com imeditato */
+      breg[rd] = breg[rs1] ^ imm12_i;
+      break;
+
+    case ORI3: /* or bit a bit com imediato */
+      breg[rd] = breg[rs1] | imm12_i;
+      break;
+
+    case ANDI3: /* and bit a bit com o imediato */
+      breg[rd] = breg[rs1] & imm12_i;
+      break;
+
+    case SLLI3: /* shift left lógico usando imediato */
+      if((shamt & 0x20) == 0) {
+	breg[rd] = breg[rs1]  << shamt;
+      }
       break;
     }
     break;
