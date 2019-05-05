@@ -178,6 +178,22 @@ void execute() {
     case LB3: /* carregar byte com sinal */
       breg[rd] = lb(memory, breg[rs1] + imm12_i);
       break;
+
+    case LH3: /* load halfword */
+      breg[rd] = lh(memory, breg[rs1] + imm12_i);
+      break;
+
+    case LW3: /* load word */
+      breg[rd] = lw(memory, breg[rs1] + imm12_i);
+      break;
+
+    case LBU3: /* load byte unsined */
+      breg[rd] = lbu(memory, breg[rs1] + imm12_i);
+      break;
+
+    case LHU3: /* load halfword unsined */
+      breg[rd] = lhu(memory, breg[rs1] + imm12_i);
+      break;
     }
     break;
 
