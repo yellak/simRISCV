@@ -199,16 +199,32 @@ void execute() {
 
   case StoreType:
     switch(funct3) {
-    case SB3:
+    case SB3: /* store byte */
       sb(memory, breg[rs1] + imm12_s, breg[rs2]);
+      break;
+
+    case SH3: /* store halfword */
+      sh(memory, breg[rs1] + imm12_s, breg[rs2]);
+      break;
+
+    case SW3: /* store word */
+      sw(memory, breg[rs1] + imm12_s, breg[rs2]);
       break;
     }
     break;
 
   case ILAType:
     switch(funct3) {
-    case ADDI3:
+    case ADDI3: /* soma com imediato */
       breg[rd] = breg[rs1] + imm12_i;
+      break;
+
+    case SLTI3: /* set if less than */
+      breg[rd] = breg[rs1] < imm12_i;
+      break;
+
+    case SLTIU3:
+      breg[rd] = ( (uint32_t) breg[rs1]) < ( (uint32_t) imm12_i);
       break;
     }
     break;
