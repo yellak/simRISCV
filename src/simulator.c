@@ -134,6 +134,9 @@ void execute() {
     break;
 
   case JAL: /* jump e salva o pc */
+    if(rd == 0) {
+      rd = ra;
+    }
     breg[rd] = pc;
     pc = pca + imm21;
     break;
@@ -344,10 +347,10 @@ void execute() {
       i = 0;
       str = lb(memory, breg[a0]);
 
-      while(str != '\0') {      
-	printf("%c", str);
-	i++;
-	str = lb(memory, breg[a0] + i);
+      while(str != '\0') {
+      	printf("%c", (char) str);
+      	i++;
+      	str = lb(memory, breg[a0] + i);
       }
       break;
 

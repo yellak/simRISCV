@@ -5,7 +5,7 @@
 
 #define MEM_SIZE 4096
 #define DATA_INIT 0x2000
-#define DATA_END 0x204C
+#define DATA_END 0x2FFC
 #define TEXT_LIMIT 0xFFC
 
 int32_t memory[MEM_SIZE]; /* memória disponível para o programa */
