@@ -12,6 +12,7 @@ int32_t data_mem[DATA_END - DATA_INIT + 1];
 int32_t pc; /* program counter */
 int32_t ri; /* registrador de instrucoes */
 int32_t breg[32]; /* banco de registradores */
+int END;
 
 /* Campos de uma instrução */
 int32_t opcode;

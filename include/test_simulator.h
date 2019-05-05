@@ -20,6 +20,9 @@ extern char test_sltiu_txt[];
 extern char test_slli_txt[];
 extern char test_srli_txt[];
 extern char test_srai_txt[];
+extern char test_ecall_1_txt[];
+extern char test_ecall_4_txt[];
+extern char test_ecall_4_dt[];
 
 int test_read_mem();
 
@@ -54,6 +57,10 @@ int test_exe_slli();
 int test_exe_srli();
 
 int test_exe_srai();
+
+void test_exe_ecall_1();
+
+void test_exe_ecall_4();
 
 void run_simulator_tests();
 

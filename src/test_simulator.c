@@ -17,6 +17,9 @@ char test_sltiu_txt[] = "tests/tst_sltiu_text.bin";
 char test_slli_txt[] = "tests/tst_slli_text.bin";
 char test_srli_txt[] = "tests/tst_srli_text.bin";
 char test_srai_txt[] = "tests/tst_srai_text.bin";
+char test_ecall_1_txt[] = "tests/tst_ecall_1_text.bin";
+char test_ecall_4_txt[] = "tests/tst_ecall_4_text.bin";
+char test_ecall_4_dt[] = "tests/tst_ecall_4_data.bin";
 
 int test_read_mem() {
   int errors = 0;
@@ -524,6 +527,37 @@ int test_exe_srai() {
   return errors;
 }
 
+/* imprimir o valor 10 */
+void test_exe_ecall_1() {
+  init_simulator();
+  read_mem(memory, test_ecall_1_txt);
+
+  fetch();
+  fetch();
+  fetch();
+  decode();
+  breg[a0] = 10;
+  breg[a7] = 1;
+  execute();
+}
+
+/* imprimir a string "kalley" */
+void test_exe_ecall_4() {
+  init_simulator();
+  read_mem(data_mem, test_ecall_4_dt);
+  read_mem(memory, test_ecall_4_txt);
+  load_data();
+
+  fetch();
+  fetch();
+  fetch();
+  fetch();
+  decode();
+  breg[a0] = 0x2000;
+  breg[a7] = 4;
+  execute();
+}
+
 void run_simulator_tests() {
   int errors;
   errors = test_read_mem();
@@ -661,4 +695,12 @@ void run_simulator_tests() {
   else {
     printf("exe_srai()   -> passou nos testes\n");
   }
+
+  printf("\nTeste ECALL OP 1:\n");
+  test_exe_ecall_1();
+  printf("\n");
+
+  printf("\nTeste ECALL OP 4:\n");
+  test_exe_ecall_4();
+  printf("\n");
 }

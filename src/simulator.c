@@ -16,6 +16,8 @@ void init_simulator() {
   
   breg[sp] = 0x00003FFC;
   breg[gp] = 0x00001800;
+
+  END = 0;
 }
 
 void read_mem(int32_t* mem, char filename[]) {
@@ -122,7 +124,8 @@ void decode() {
 
 void execute() {
   int32_t pca = pc - 4;
-  int temp;
+  int temp, i;
+  char str;
   uint32_t temp2;
 
   switch(opcode) {
@@ -256,7 +259,7 @@ void execute() {
 	}
 	break;
 
-      case SRAI7: /* lógico, preenchendo com zeros */
+      case SRAI7: /* aritmetico, preenchendo com sinal */
 	if((shamt & 0x20) == 0) {
 	  temp2 = breg[rs1]  >> shamt;
 	  breg[rd] = temp2;
@@ -273,9 +276,50 @@ void execute() {
       case ADD7: /* adição */
 	breg[rd] = breg[rs1] + breg[rs2];
 	break;
+
+      case SUB7:
+	breg[rd] = breg[rs1] - breg[rs2];
+	break;
       } /* switch(funct7) */
       break;
-    }	/* switch(funct3) */
+
+    case XOR3: /* xor bit a bit entre registradores */
+      breg[rd] = breg[rs1] ^ breg[rs2];
+      break;
+
+    case OR3: /* or bit a bit entre registradores */
+      breg[rd] = breg[rs1] | breg[rs2];
+      break;
+
+    case AND3: /* and bit a bit entre registradores */
+      breg[rd] = breg[rs1] & breg[rs2];
+      break;
+
+    case SLL3: /* shift left lógico */
+      breg[rd] = breg[rs1] << breg[rs2];
+      break;
+
+    case SLT3: /* set if lower than */
+      breg[rd] = breg[rs1] < breg[rs2];
+      break;
+
+    case SLTU3: /* set if lower than unsigned */
+      temp2 = ( (uint32_t) breg[rs1] ) < ( (uint32_t) breg[rs2] );
+      breg[rd] = temp2;
+      break;
+
+    case SR3: /* shift right */
+      switch(funct7) {
+      case SRL7: /* lógico, preenchendo com zeros */
+	temp2 = ( (uint32_t) breg[rs1])  >> ( (uint32_t) breg[rs2] );
+	breg[rd] = temp2;
+	break;
+
+      case SRA7: /* aritmético, extendendo o sinal */
+	breg[rd] = breg[rs1]  >> breg[rs2];
+	break;
+      }
+    }	/* switch(funct3) RegType */
     break;
 
   case AUIPC: /* pc recebe  */
@@ -287,6 +331,30 @@ void execute() {
     pc = (breg[rs1] + imm12_i) & ~1;
     if(rd != 0) {
       breg[rd] = temp;
-    }
+    } /* JALR */
+    break;
+
+  case ECALL: /* chamadas de sistema */
+    switch(breg[a7]) {
+    case 1: /* imprimir inteiro */
+      printf("%d", breg[a0]);
+      break;
+
+    case 4:
+      i = 0;
+      str = lb(memory, breg[a0]);
+
+      while(str != '\0') {      
+	printf("%c", str);
+	i++;
+	str = lb(memory, breg[a0] + i);
+      }
+      break;
+
+    case 10:
+      END = 1;
+      break;
+    } /* switch(breg[a7]) ECALL */
+    break;
   } /* switch(opcode) */
 }
