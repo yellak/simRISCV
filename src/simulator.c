@@ -123,6 +123,8 @@ void decode() {
 void execute() {
   int32_t pca = pc - 4;
   int temp;
+  uint32_t temp2;
+
   switch(opcode) {
   case LUI: /* 20 bits mais significativos */
     breg[rd] = imm20_u;
@@ -244,6 +246,23 @@ void execute() {
 	breg[rd] = breg[rs1]  << shamt;
       }
       break;
+
+    case SRI3: /* shift right usando imediato */
+      switch(funct7) {
+      case SRLI7: /* lógico, preenchendo com zeros */
+	if((shamt & 0x20) == 0) {
+	  temp2 = ( (uint32_t) breg[rs1])  >> ( (uint32_t) shamt );
+	  breg[rd] = temp2;
+	}
+	break;
+
+      case SRAI7: /* lógico, preenchendo com zeros */
+	if((shamt & 0x20) == 0) {
+	  temp2 = breg[rs1]  >> shamt;
+	  breg[rd] = temp2;
+	}
+	break;
+      }
     }
     break;
 

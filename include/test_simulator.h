@@ -18,6 +18,8 @@ extern char test_jalr_txt[];
 extern char test_slti_txt[];
 extern char test_sltiu_txt[];
 extern char test_slli_txt[];
+extern char test_srli_txt[];
+extern char test_srai_txt[];
 
 int test_read_mem();
 
@@ -48,6 +50,10 @@ int test_exe_slti();
 int test_exe_sltiu();
 
 int test_exe_slli();
+
+int test_exe_srli();
+
+int test_exe_srai();
 
 void run_simulator_tests();
 

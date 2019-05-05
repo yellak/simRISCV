@@ -15,6 +15,8 @@ char test_jalr_txt[] = "tests/tst_jalr_text.bin";
 char test_slti_txt[] = "tests/tst_slti_text.bin";
 char test_sltiu_txt[] = "tests/tst_sltiu_text.bin";
 char test_slli_txt[] = "tests/tst_slli_text.bin";
+char test_srli_txt[] = "tests/tst_srli_text.bin";
+char test_srai_txt[] = "tests/tst_srai_text.bin";
 
 int test_read_mem() {
   int errors = 0;
@@ -488,6 +490,40 @@ int test_exe_slli() {
   return errors;
 }
 
+int test_exe_srli() {
+  init_simulator();
+  read_mem(memory, test_srli_txt);
+  int errors = 0;
+
+  fetch();
+  fetch();
+  decode();
+  breg[t0] = -1;
+  execute();
+  if(breg[t1] != 0x0FFFFFFF) {
+    errors++;
+  }
+
+  return errors;
+}
+
+int test_exe_srai() {
+  init_simulator();
+  read_mem(memory, test_srai_txt);
+  int errors = 0;
+
+  fetch();
+  fetch();
+  decode();
+  breg[t0] = -1;
+  execute();
+  if(breg[t1] != -1) {
+    errors++;
+  }
+
+  return errors;
+}
+
 void run_simulator_tests() {
   int errors;
   errors = test_read_mem();
@@ -608,5 +644,21 @@ void run_simulator_tests() {
   }
   else {
     printf("exe_slli()   -> passou nos testes\n");
+  }
+
+  errors = test_exe_srli();
+  if(errors > 0) {
+    printf("exe_srli()   -> %d erros\n", errors);
+  }
+  else {
+    printf("exe_srli()   -> passou nos testes\n");
+  }
+
+  errors = test_exe_srai();
+  if(errors > 0) {
+    printf("exe_srai()   -> %d erros\n", errors);
+  }
+  else {
+    printf("exe_srai()   -> passou nos testes\n");
   }
 }
