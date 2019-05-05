@@ -12,5 +12,4 @@
 int main() {
   int32_t mem[100];
   read_mem(mem, "tests/test1_text.bin");
-  dump_mem(mem, 5);
 }

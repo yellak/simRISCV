@@ -90,4 +90,11 @@ void decode();
 /* Executa uma instrução lida pela função fetch() e decodificada por decode() */
 void execute();
 
+/* Mostra a memória iniciando do endereço start até end. format pode ser
+   'h' de hexa ou 'd' de decimal */
+void dump_mem(int start, int end, char format);
+
+/* Mostra o conteúdo dos registradores format é o mesmo de dump_mem */
+void dump_reg(char format);
+
 #endif

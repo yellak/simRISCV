@@ -558,6 +558,17 @@ void test_exe_ecall_4() {
   execute();
 }
 
+void test_dump_mem() {
+  init_simulator();
+  read_mem(memory, test1);
+  dump_mem(0, 10*4, 'h');
+}
+
+void test_dump_reg() {
+  init_simulator();
+  dump_reg('h');
+}
+
 void run_simulator_tests() {
   int errors;
   errors = test_read_mem();
@@ -703,4 +714,10 @@ void run_simulator_tests() {
   printf("\nTeste ECALL OP 4:\n");
   test_exe_ecall_4();
   printf("\n");
+
+  printf("\nTeste dump_mem:\n");
+  test_dump_mem();
+
+  printf("\nTeste dump_reg:\n");
+  test_dump_reg();
 }

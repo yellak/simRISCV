@@ -357,4 +357,42 @@ void execute() {
     } /* switch(breg[a7]) ECALL */
     break;
   } /* switch(opcode) */
+
+  breg[zero] = 0;
+}
+
+void dump_mem(int start, int end, char format) {
+  int i;
+  switch(format) {
+  case 'h':
+    for(i = start; i < end; i += 4) {
+      printf("mem[%d]: 0x%08X\n", i >> 2, memory[i >> 2]);
+    }
+    break;
+
+  case 'd':
+    for(i = start; i < end; i += 4) {
+      printf("mem[%d]: %d\n", i >> 2, memory[i >> 2]);
+    }
+    break;
+  }
+}
+
+void dump_reg(char format) {
+  int i;
+  switch(format) {
+  case 'h':
+    for(i = 0; i < 32; i++) {
+      printf("breg[%2d]: 0x%08X\n", i, breg[i]);
+    }
+    printf("pc:       0x%08X\n", pc);
+    break;
+
+  case 'd':
+    for(i = 0; i < 32; i++) {
+      printf("breg[%2d]: %d\n", i, breg[i]);
+    }
+    printf("pc:       %d", pc);
+    break;
+  }
 }

@@ -60,6 +60,4 @@ void sb(int32_t* address, int32_t kte, int8_t dado);
    dado    -> valor a ser armazenado na memória */
 void sh(int32_t* address, int32_t kte, int16_t dado);
 
-void dump_mem(int32_t* address, uint32_t wsize);
-
 #endif

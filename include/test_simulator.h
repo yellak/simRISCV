@@ -62,6 +62,10 @@ void test_exe_ecall_1();
 
 void test_exe_ecall_4();
 
+void test_dump_mem();
+
+void test_dump_reg();
+
 void run_simulator_tests();
 
 #endif
