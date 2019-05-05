@@ -6,6 +6,7 @@
 #define MEM_SIZE 4096
 #define DATA_INIT 0x2000
 #define DATA_END 0x204C
+#define TEXT_LIMIT 0xFFC
 
 int32_t memory[MEM_SIZE]; /* memória disponível para o programa */
 int32_t data_mem[DATA_END - DATA_INIT + 1];
@@ -96,5 +97,13 @@ void dump_mem(int start, int end, char format);
 
 /* Mostra o conteúdo dos registradores format é o mesmo de dump_mem */
 void dump_reg(char format);
+
+/* Executa uma instrução
+   fetch => decode => execute */
+void step();
+
+/* Executa o programa até achar uma chamada de sistema para fim ou
+   o pc alcançar o final do segmento de código */
+void run();
 
 #endif

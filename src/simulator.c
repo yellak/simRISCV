@@ -396,3 +396,15 @@ void dump_reg(char format) {
     break;
   }
 }
+
+void step() {
+  fetch();
+  decode();
+  execute();
+}
+
+void run() {
+  while(END == 0 && pc <= TEXT_LIMIT) {
+    step();
+  }
+}
