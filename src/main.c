@@ -1,4 +1,3 @@
-#include "../include/test_mem.h"
 #include "../include/simulator.h"
 
 /* Sistema Operacional utilizado: Linux Ubuntu 18.04
@@ -10,6 +9,10 @@
    programa irá compilar e então execute digitando ./main */
 
 int main() {
-  int32_t mem[100];
-  read_mem(mem, "tests/test1_text.bin");
+  init_simulator();
+  read_mem(data_mem, "progs/BJ_data.bin");
+  read_mem(memory, "progs/BJ.bin");
+  load_data();
+  run();
+  printf("\n");
 }
