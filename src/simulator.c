@@ -165,5 +165,17 @@ void execute() {
       break;
     }
     break;
+
+  case RegType:
+    switch(funct3) {
+    case ADDSUB3:
+      switch(funct7) {
+      case ADD7:
+	breg[rd] = breg[rs1] + breg[rs2];
+	break;
+      } /* switch(funct7) */
+      break;
+    }	/* switch(funct3) */
+    break;
   } /* switch(opcode) */
 }

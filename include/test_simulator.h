@@ -12,6 +12,7 @@ extern char test_lb_txt[];
 extern char test_lb_dt[];
 extern char test_sb_txt[];
 extern char test_addi_txt[];
+extern char test_add_txt[];
 
 int test_read_mem();
 
@@ -30,6 +31,8 @@ int test_exe_lb();
 int test_exe_sb();
 
 int test_exe_addi();
+
+int test_exe_add();
 
 void run_simulator_tests();
 
