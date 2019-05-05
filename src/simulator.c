@@ -122,6 +122,7 @@ void decode() {
 
 void execute() {
   int32_t pca = pc - 4;
+  int temp;
   switch(opcode) {
   case LUI: /* 20 bits mais significativos */
     breg[rd] = imm20_u;
@@ -134,12 +135,42 @@ void execute() {
 
   case BType: /* branches */
     switch(funct3) {
-    case BEQ3:
+    case BEQ3: /* brach if equal */
       if(breg[rs1] == breg[rs2]) {
 	pc = pca + imm13;
       } /* if */
       break;
-    } /* switch(funct3) */
+
+    case BNE3: /* brach if not equal */
+      if(breg[rs1] != breg[rs2]) {
+	pc = pca + imm13;
+      } /* if */
+      break;
+
+    case BLT3: /* branch if less than */
+      if(breg[rs1] < breg[rs2]) {
+	pc = pca + imm13;
+      }
+      break;
+
+    case BGE3: /* if greater or equal */
+      if(breg[rs1] >= breg[rs2]) {
+	pc = pca + imm13;
+      }
+      break;
+
+    case BLTU3: /* less than unsined */
+      if(( (uint32_t) breg[rs1] ) < ( (uint32_t) breg[rs2] ) ) {
+	pc = pca + imm13;
+      }
+      break;
+
+    case BGEU3: /* greater or equal than unsined */
+      if(( (uint32_t) breg[rs1] ) >= ( (uint32_t) breg[rs2] )) {
+	pc = pca + imm13;
+      }
+      break;
+    } /* switch(funct3) - BType*/
     break;
 
   case ILType: /* load */
@@ -170,12 +201,23 @@ void execute() {
     switch(funct3) {
     case ADDSUB3:
       switch(funct7) {
-      case ADD7:
+      case ADD7: /* adição */
 	breg[rd] = breg[rs1] + breg[rs2];
 	break;
       } /* switch(funct7) */
       break;
     }	/* switch(funct3) */
     break;
+
+  case AUIPC: /* pc recebe  */
+    breg[rd] = pca + imm20_u;
+    break;
+
+  case JALR:
+    temp = pc;
+    pc = (breg[rs1] + imm12_i) & ~1;
+    if(rd != 0) {
+      breg[rd] = temp;
+    }
   } /* switch(opcode) */
 }

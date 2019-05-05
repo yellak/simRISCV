@@ -10,6 +10,8 @@ char test_lb_dt[] = "tests/tst_lb_data.bin";
 char test_sb_txt[] = "tests/tst_sb_text.bin";
 char test_addi_txt[] = "tests/tst_addi_text.bin";
 char test_add_txt[] = "tests/tst_add_text.bin";
+char test_auipc_txt[] = "tests/tst_auipc_text.bin";
+char test_jalr_txt[] = "tests/tst_jalr_text.bin";
 
 int test_read_mem() {
   int errors = 0;
@@ -387,6 +389,51 @@ int test_exe_add() {
   return errors;
 }
 
+int test_exe_auipc() {
+  init_simulator();
+  read_mem(memory, test_auipc_txt);
+  int errors = 0;
+
+  fetch();
+  fetch();
+  decode();
+  execute();
+  if(breg[t1] != 0xABC004) {
+    errors++;
+  }
+
+  return errors;
+}
+
+int test_exe_jalr() {
+  init_simulator();
+  read_mem(memory, test_jalr_txt);
+  int errors = 0;
+
+  /* operação auipc */
+  fetch();
+  decode();
+  execute();
+  /* operação jalr */
+  fetch();
+  decode();
+  execute();
+  if(breg[ra] != 8 || pc != 8) {
+    errors++;
+  }
+  /* operação nop */
+  fetch();
+  /* operação jalr */
+  fetch();
+  decode();
+  execute();
+  if(pc != 8) {
+    errors++;
+  }
+
+ return errors;
+}
+
 void run_simulator_tests() {
   int errors;
   errors = test_read_mem();
@@ -467,5 +514,21 @@ void run_simulator_tests() {
   }
   else {
     printf("exe_add()    -> passou nos testes\n");
+  }
+
+  errors = test_exe_auipc();
+  if(errors > 0) {
+    printf("exe_auipc()  -> %d erros\n", errors);
+  }
+  else {
+    printf("exe_auipc()  -> passou nos testes\n");
+  }
+
+  errors = test_exe_jalr();
+  if(errors > 0) {
+    printf("exe_jalr()   -> %d erros\n", errors);
+  }
+  else {
+    printf("exe_jalr()   -> passou nos testes\n");
   }
 }
