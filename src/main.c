@@ -14,11 +14,16 @@ int main() {
   /* testbin - caminho até o arquivo binário com os dados .text */
   char databin[] = "progs/BJ_data.bin";
   char textbin[] = "progs/BJ.bin";
+  /* Sugestões:
+     progs/decbin_data.bin e progs/decbin.bin
+     progs/fib_data.bin e progs/fib.bin */
 
   char option;
   int start, end;
   init_simulator();
-  read_mem(data_mem, databin); /* lendo .data */
+  if(databin != NULL) {
+    read_mem(data_mem, databin); /* lendo .data */    
+  }
   read_mem(memory, textbin);   /* lendo .text */
   load_data();
 
