@@ -16,31 +16,49 @@ int main() {
   char textbin[] = "progs/BJ.bin";
 
   char option;
+  int start, end;
   init_simulator();
-  read_mem(data_mem, databin);
-  read_mem(memory, textbin);
+  read_mem(data_mem, databin); /* lendo .data */
+  read_mem(memory, textbin);   /* lendo .text */
   load_data();
 
   printf("Iniciando o programa...\n");
   while(END != 1) {
     printf("\n----------------------------------------\n");
+    printf("s - step\n");
+    printf("r - run\n");
+    printf("l - listar registros\n");
+    printf("m - mostrar memória\n");
+    printf("q - sair\n");
     printf("Escolha uma:\n");
-    printf("s-step\n");
-    printf("r-run\n");
-    printf("m-mostrar registros\n");
     scanf("\n%c", &option);
+
     switch(option) {
-    case 's':
+    case 's': /* step */
       step();
       break;
 
-    case 'r':
+    case 'r': /* rodar programa todo */
       printf("\n----------------------------------------\n");
       run();
       break;
 
-    case 'm':
+    case 'l': /* listar registradores */
       dump_reg('h');
+      break;
+
+    case 'q': /* sair do programa */
+      END = 1;
+      break;
+
+    case 'm': /* mostrar memória */
+      printf("Escolha os endereços inicial e final (decimal):\n");
+      printf("Inicial: ");
+      scanf("%d", &start);
+      printf("Final: ");
+      scanf("%d", &end);
+      printf("\nMemória de %d a %d (endereço de byte):\n\n", start, end);
+      dump_mem(start, end, 'h');
       break;
     } /* switch(option) */
   }
